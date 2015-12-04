@@ -3,10 +3,39 @@
 set -e
 set -x
 
-wget -qq -O - http://pxe.omv-extras.org/packages | (while read line; do
-	echo "http://pxe.omv-extras.org/${line}"
-done) > /media/5fd18e51-966f-4664-b9cf-999c23d2855f/debarchive/sources/pxe-packages.list
+function create_debian_netinstall_pxe_package() {
+	local MIRROR="$1"
+	local SUITE="$2"
+	local ARCH="$3"
+	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH}" > /tmp/config.sh
+	cat .scripts/debian_netinstall_helper.sh >> /tmp/config.sh
+	tar -czf pxe-packages/debian_${SUITE}_netinstall_${ARCH}.tar.gz -C /tmp config.sh
+	rm -f /tmp/config.sh
+}
 
-#echo "http://UniverseNAS.0rca.ch/sources/pxe-packages/xyz.tar.gz" >> /media/5fd18e51-966f-4664-b9cf-999c23d2855f/debarchive/sources/pxe-packages.list
+# create Debian squeeze NetInstall package
+create_debian_netinstall_pxe_package "ch" "squeeze" "amd64"
+create_debian_netinstall_pxe_package "ch" "squeeze" "i386"
+create_debian_netinstall_pxe_package "ch" "squeeze" "armhf"
+
+# create Debian wheezy NetInstall package
+create_debian_netinstall_pxe_package "ch" "wheezy" "amd64"
+create_debian_netinstall_pxe_package "ch" "wheezy" "i386"
+create_debian_netinstall_pxe_package "ch" "wheezy" "armhf"
+
+# create Debian jessie NetInstall package
+create_debian_netinstall_pxe_package "ch" "jessie" "amd64"
+create_debian_netinstall_pxe_package "ch" "jessie" "i386"
+create_debian_netinstall_pxe_package "ch" "jessie" "armhf"
+
+LOCAL_PACKAGES=$(cd pxe-packages && find . -type f -name "*.tar.gz")
+(for PACKAGE in ${LOCAL_PACKAGES}; do
+	echo "http://UniverseNAS.0rca.ch/sources/pxe-packages/"$(basename ${PACKAGE})
+done) > pxe-packages.list
+
+REMOTE_PACKAGES=$(wget -qq -O - http://pxe.omv-extras.org/packages)
+(for PACKAGE in ${REMOTE_PACKAGES}; do
+	echo "http://pxe.omv-extras.org/${PACKAGE}"
+done) >> pxe-packages.list
 
 exit 0

@@ -9,4 +9,4 @@ ehthumbs.db
 Thumbs.db
 
 pxe-packages.list
-pxe-packages/*.src
+pxe-packages/*
