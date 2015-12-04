@@ -13,7 +13,6 @@ URL="${MIRROR_URL}/${SUITE_URL}/${ARCH_URL}"
 
 mkdir -p debian/${SUITE}/netinst/${ARCH}
 
-http://ftp.nl.debian.org/debian/dists/jessie/main/installer-i386/current/images/netboot/netboot.tar.gz
 wget -O /tmp/${SUITE}_${ARCH}_netboot.tar.gz ${URL}/netboot.tar.gz
 mkdir -p /tmp/${SUITE}_${ARCH}_netboot
 tar -xzf /tmp/${SUITE}_${ARCH}_netboot.tar.gz -C /tmp/${SUITE}_${ARCH}_netboot
