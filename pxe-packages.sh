@@ -1,14 +1,17 @@
 #!/bin/bash
 
 set -e
-set -x
+#set -x
+
+SCRIPTNAME=$(basename "$0")
+SCRIPTDIR=$(cd `dirname "$0"` && pwd)
 
 function create_debian_netinstall_pxe_package() {
 	local MIRROR="$1"
 	local SUITE="$2"
 	local ARCH="$3"
 	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH}" > /tmp/config.sh
-	cat .scripts/debian_netinstall_helper.sh >> /tmp/config.sh
+	cat ${SCRIPTDIR}/.scripts/debian_netinstall_helper.sh >> /tmp/config.sh
 	tar -czf pxe-packages/debian_${SUITE}_netinstall_${ARCH}.tar.gz -C /tmp config.sh
 	rm -f /tmp/config.sh
 }
