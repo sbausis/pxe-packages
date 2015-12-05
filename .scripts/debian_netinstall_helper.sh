@@ -35,15 +35,15 @@ else
 	APPEND=$(cat /tmp/${SUITE}_${ARCH}_txt.cfg | grep append | sed 's/^.*append //' | sed "s|debian-installer/${ARCH}/initrd.gz|debian/${SUITE}/netinst/${ARCH}/initrd.gz|")
 fi
 
-CONFIG_FILE=".${SUITE}_${ARCH}_netboot.config"
-[ -n "${INTERFACE}" ] && CONFIG_FILE=".${SUITE}_${ARCH}_${INTERFACE}_netboot.config"
+CONFIG_FILE="./.${SUITE}_${ARCH}_netboot.config"
+[ -n "${INTERFACE}" ] && CONFIG_FILE="./.${SUITE}_${ARCH}_${INTERFACE}_netboot.config"
 cat <<EOF > ${CONFIG_FILE}
 LABEL $LABEL
  KERNEL $KERNEL
  APPEND $APPEND
 EOF
 
-ln -s ${CONFIG_FILE} config.txt
+ln -s ${CONFIG_FILE} ./config.txt
 rm -f /tmp/${SUITE}_${ARCH}_txt.cfg config.sh
 exit 0
 
