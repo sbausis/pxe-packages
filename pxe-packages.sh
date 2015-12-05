@@ -54,4 +54,6 @@ done) >> /tmp/pxe-packages.list
 cat <(cat /tmp/pxe-packages.list | sort) > pxe-packages.list
 rm -f /tmp/pxe-packages.list
 
+echo "6.03" > pxe-syslinux
+
 exit 0
