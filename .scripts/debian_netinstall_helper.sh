@@ -36,7 +36,7 @@ else
 fi
 
 CONFIG_FILE=".${SUITE}_${ARCH}_netboot.config"
-[ -n "${INTERFACE}" ] && CONFIG_FILE="${SUITE}_${ARCH}_${INTERFACE}_netboot"
+[ -n "${INTERFACE}" ] && CONFIG_FILE=".${SUITE}_${ARCH}_${INTERFACE}_netboot.config"
 cat <<EOF > ${CONFIG_FILE}
 LABEL $LABEL
  KERNEL $KERNEL
