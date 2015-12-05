@@ -43,12 +43,15 @@ create_debian_netinstall_pxe_package "ch" "jessie" "i386" "gtk"
 LOCAL_PACKAGES=$(cd pxe-packages && find . -type f -name "*.tar.gz")
 (for PACKAGE in ${LOCAL_PACKAGES}; do
 	echo "http://UniverseNAS.0rca.ch/sources/pxe-packages/"$(basename ${PACKAGE})
-done) > pxe-packages.list
+done) > /tmp/pxe-packages.list
 
 REMOTE_PACKAGES=$(wget -qq -O - http://pxe.omv-extras.org/packages)
 (for PACKAGE in ${REMOTE_PACKAGES}; do
 	
 	echo "http://pxe.omv-extras.org/${PACKAGE}"
-done) >> pxe-packages.list
+done) >> /tmp/pxe-packages.list
+
+cat <(cat /tmp/pxe-packages.list | sort) > pxe-packages.list
+rm -f /tmp/pxe-packages.list
 
 exit 0
