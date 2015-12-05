@@ -43,7 +43,7 @@ LABEL $LABEL
  APPEND $APPEND
 EOF
 
-ln -s ${CONFIG_FILE} ./config.txt
+cp -f ${CONFIG_FILE} ./config.txt
 rm -f /tmp/${SUITE}_${ARCH}_txt.cfg config.sh
 exit 0
 
