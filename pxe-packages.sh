@@ -34,6 +34,12 @@ create_debian_netinstall_pxe_package "ch" "wheezy" "i386"
 create_debian_netinstall_pxe_package "ch" "wheezy" "amd64" "gtk"
 create_debian_netinstall_pxe_package "ch" "wheezy" "i386" "gtk"
 
+# create Debian sid NetInstall package
+create_debian_netinstall_pxe_package "ch" "sid" "amd64"
+create_debian_netinstall_pxe_package "ch" "sid" "i386"
+create_debian_netinstall_pxe_package "ch" "sid" "amd64" "gtk"
+create_debian_netinstall_pxe_package "ch" "sid" "i386" "gtk"
+
 # create Debian jessie NetInstall package
 create_debian_netinstall_pxe_package "ch" "jessie" "amd64"
 create_debian_netinstall_pxe_package "ch" "jessie" "i386"
