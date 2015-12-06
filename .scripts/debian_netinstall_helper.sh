@@ -32,7 +32,7 @@ LOCKFILE=${TEMPDIR}/${SCRIPTNAME}.lock
 function clean_up() {
 	
 	#echo "Clean up ..."
-	rm -Rf "${TEMPDIR}"
+	#rm -Rf "${TEMPDIR}"
 	
 	if [ "$1" != "0" ]; then
 		echo "ERROR ..."
@@ -109,7 +109,7 @@ fi
 # extract NetBoot-Image
 
 mkdir -p /tmp/${SUITE}_${ARCH}_netboot
-tar -xzf /tmp/${SUITE}_${ARCH}_netboot.tar.gz -C /tmp/${SUITE}_${ARCH}_netboot
+tar -xzfv /tmp/${SUITE}_${ARCH}_netboot.tar.gz -C /tmp/${SUITE}_${ARCH}_netboot
 
 ################################################################################
 # working directories
@@ -126,7 +126,9 @@ mkdir -p ${DEST_DIR}
 if [ -f "${SOURCE_DIR}/vmlinuz" ]; then
 	LINUX="vmlinuz"
 	cp -f ${SOURCE_DIR}/vmlinuz ${DEST_DIR}/vmlinuz
-else
+fi
+
+if [ -f "${SOURCE_DIR}/linux" ]; then
 	LINUX="linux"
 	cp -f ${SOURCE_DIR}/linux ${DEST_DIR}/linux
 fi
@@ -172,8 +174,7 @@ cp -f ${CONFIG_FILE} ./config.txt
 ################################################################################
 # cleanUp
 
-rm -Rf /tmp/${SUITE}_${ARCH}_netboot.tar.gz /tmp/${SUITE}_${ARCH}_netboot config.sh
-
+#rm -Rf /tmp/${SUITE}_${ARCH}_netboot.tar.gz /tmp/${SUITE}_${ARCH}_netboot config.sh
 
 clean_up 0
 
