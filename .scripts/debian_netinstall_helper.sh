@@ -109,7 +109,7 @@ fi
 # extract NetBoot-Image
 
 mkdir -p /tmp/${SUITE}_${ARCH}_netboot
-tar -xzfv /tmp/${SUITE}_${ARCH}_netboot.tar.gz -C /tmp/${SUITE}_${ARCH}_netboot
+tar -xvzf /tmp/${SUITE}_${ARCH}_netboot.tar.gz -C /tmp/${SUITE}_${ARCH}_netboot
 
 ################################################################################
 # working directories
