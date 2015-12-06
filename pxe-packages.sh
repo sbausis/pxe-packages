@@ -12,7 +12,7 @@ function create_debian_netinstall_pxe_package() {
 	local ARCH="$3"
 	local INTERFACE="$4"
 	mkdir -p pxe-packages
-	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" > /tmp/config.sh
+	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=${INTERFACE};" > /tmp/config.sh
 	cat ${SCRIPTDIR}/.scripts/debian_netinstall_helper.sh >> /tmp/config.sh
 	if [ -n "${INTERFACE}" ]; then
 		tar -czf pxe-packages/debian_${SUITE}_netinstall_${ARCH}_${INTERFACE}.tar.gz -C /tmp config.sh
