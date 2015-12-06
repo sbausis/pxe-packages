@@ -114,7 +114,7 @@ tar -xvzf /tmp/${SUITE}_${ARCH}_netboot.tar.gz -C /tmp/${SUITE}_${ARCH}_netboot
 ################################################################################
 # working directories
 
-SOURCE_DIR="/tmp/${SUITE}_${ARCH}_netboot/debian-installer"
+SOURCE_DIR="/tmp/${SUITE}_${ARCH}_netboot/debian-installer/${ARCH}"
 DEST_DIR="debian/${SUITE}/netinst/${ARCH}"
 [ -n "${INTERFACE}" ] && DEST_DIR+="/${INTERFACE}"
 
@@ -143,12 +143,12 @@ cp -f ${SOURCE_DIR}/initrd.gz ${DEST_DIR}/initrd.gz
 ################################################################################
 # get config
 
-if [ -f "${SOURCE_DIR}/${ARCH}/boot-screens/txt.cfg" ]; then
+if [ -f "${SOURCE_DIR}/boot-screens/txt.cfg" ]; then
 
 	LABEL="Debian ${SUITE} ${ARCH} NetInstall"
 	[ -n "${INTERFACE}" ] && LABEL+=" ${INTERFACE}"
 	KERNEL="${DEST_DIR}/${LINUX}"
-	APPEND=$(cat ${SOURCE_DIR}/${ARCH}/boot-screens/txt.cfg | grep append | sed 's/^.*append //' | sed "s|debian-installer/${ARCH}/initrd.gz|${DEST_DIR}/initrd.gz|")
+	APPEND=$(cat ${SOURCE_DIR}/boot-screens/txt.cfg | grep append | sed 's/^.*append //' | sed "s|debian-installer/${ARCH}/initrd.gz|${DEST_DIR}/initrd.gz|")
 
 else
 
