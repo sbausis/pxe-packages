@@ -1,5 +1,5 @@
 
-#set -x
+set -x
 set -e
 
 MIRROR=${MIRROR-"ch"}
