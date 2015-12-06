@@ -17,7 +17,7 @@ mkdir -p debian/${SUITE}/netinst/${ARCH}/${INTERFACE}
 wget -O /tmp/${SUITE}_${ARCH}_netboot.tar.gz ${URL}/netboot.tar.gz
 
 SHASUM=$(wget -q -O - "${MIRROR_URL}/${SUITE_URL}/installer-${ARCH}/current/images/SHA256SUMS" | grep "./netboot/netboot.tar.gz" | head -n 1 | awk -F" " '{print $1}')
-if [ "${SHASUM}" != "$(sha256sum /tmp/${SUITE}_${ARCH}_netboot.tar.gz)" ]; then
+if [ "${SHASUM}" != "$(sha256sum /tmp/${SUITE}_${ARCH}_netboot.tar.gz | awk -F" " '{print $1}')" ]; then
 	echo "!!! Checksum mismatch !!!"
 	rm -f /tmp/${SUITE}_${ARCH}_netboot.tar.gz
 	exit 1
