@@ -13,7 +13,7 @@ SCRIPTNAME=$(basename "$0")
 ## Need Packages
 
 NEEDEDPACKAGES=""
-#if [ -z `which git` ]; then NEEDEDPACKAGES+="git-core "; fi
+if [ -z `which pax` ]; then NEEDEDPACKAGES+="pax "; fi
 if [ -n "${NEEDEDPACKAGES}" ]; then
 	echo "Need ${NEEDEDPACKAGES}, installing them..."
 	apt-get -qq -y install ${NEEDEDPACKAGES}
@@ -91,7 +91,7 @@ URL="${MIRROR_URL}/${SUITE_URL}/${ARCH_URL}"
 ################################################################################
 # download NetBoot-Image
 
-wget -O /tmp/${SUITE}_${ARCH}_netboot.tar.gz ${URL}/netboot.tar.gz
+wget -O ${TEMPDIR}/${SUITE}_${ARCH}_netboot.tar.gz ${URL}/netboot.tar.gz
 
 ################################################################################
 # checksum NetBoot-Image
@@ -99,22 +99,22 @@ wget -O /tmp/${SUITE}_${ARCH}_netboot.tar.gz ${URL}/netboot.tar.gz
 DIR=${INTERFACE}
 [ -z "${DIR}" ] && DIR="netboot"
 SHASUM=$(wget -q -O - "${MIRROR_URL}/${SUITE_URL}/installer-${ARCH}/current/images/MD5SUMS" | grep "${DIR}/netboot.tar.gz" | head -n 1 | awk -F" " '{print $1}')
-if [ "${SHASUM}" != "$(md5sum /tmp/${SUITE}_${ARCH}_netboot.tar.gz | awk -F" " '{print $1}')" ]; then
+if [ "${SHASUM}" != "$(md5sum ${TEMPDIR}/${SUITE}_${ARCH}_netboot.tar.gz | awk -F" " '{print $1}')" ]; then
 	echo "!!! Checksum mismatch !!!"
-	rm -f /tmp/${SUITE}_${ARCH}_netboot.tar.gz
+	rm -f ${TEMPDIR}/${SUITE}_${ARCH}_netboot.tar.gz
 	clean_up 1
 fi
 
 ################################################################################
 # extract NetBoot-Image
 
-mkdir -p /tmp/${SUITE}_${ARCH}_netboot
-tar -xvzf /tmp/${SUITE}_${ARCH}_netboot.tar.gz -C /tmp/${SUITE}_${ARCH}_netboot
+mkdir -p ${TEMPDIR}/${SUITE}_${ARCH}_netboot
+tar -xvzf ${TEMPDIR}/${SUITE}_${ARCH}_netboot.tar.gz -C ${TEMPDIR}/${SUITE}_${ARCH}_netboot
 
 ################################################################################
 # working directories
 
-SOURCE_DIR="/tmp/${SUITE}_${ARCH}_netboot/debian-installer/${ARCH}"
+SOURCE_DIR="${TEMPDIR}/${SUITE}_${ARCH}_netboot/debian-installer/${ARCH}"
 DEST_DIR="debian/${SUITE}/netinst/${ARCH}"
 [ -n "${INTERFACE}" ] && DEST_DIR+="/${INTERFACE}"
 
@@ -139,6 +139,19 @@ fi
 #get ramdisk
 
 cp -f ${SOURCE_DIR}/initrd.gz ${DEST_DIR}/initrd.gz
+
+set +e
+wget -O ${TEMPDIR}/firmware.cpio.gz http://cdimage.debian.org/cdimage/unofficial/non-free/firmware/${SUITE}/current/firmware.cpio.gz
+set -e
+
+if [ ! -f "${TEMPDIR}/firmware.cpio.gz" ]; then
+	
+	wget -O ${TEMPDIR}/firmware.tar.gz http://cdimage.debian.org/cdimage/unofficial/non-free/firmware/${SUITE}/current/firmware.tar.gz
+	mkdir -p ${TEMPDIR}/firmware
+	tar -C ${TEMPDIR}/firmware -zxf ${TEMPDIR}/firmware.tar.gz
+	(cd ${TEMPDIR} && pax -x sv4cpio -s'%firmware%/firmware%' -w firmware | gzip -c >${TEMPDIR}/firmware.cpio.gz)
+fi
+cat ${SOURCE_DIR}/initrd.gz ${TEMPDIR}/firmware.cpio.gz > ${DEST_DIR}/initrd.firmware.gz
 
 ################################################################################
 # get config
@@ -174,7 +187,7 @@ cp -f ${CONFIG_FILE} ./config.txt
 ################################################################################
 # cleanUp
 
-#rm -Rf /tmp/${SUITE}_${ARCH}_netboot.tar.gz /tmp/${SUITE}_${ARCH}_netboot config.sh
+#rm -Rf ${TEMPDIR}/${SUITE}_${ARCH}_netboot.tar.gz ${TEMPDIR}/${SUITE}_${ARCH}_netboot config.sh
 
 clean_up 0
 
