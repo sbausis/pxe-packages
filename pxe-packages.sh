@@ -23,37 +23,41 @@ function create_debian_netinstall_pxe_package() {
 }
 
 # create Debian squeeze NetInstall package
-create_debian_netinstall_pxe_package "ch" "squeeze" "amd64"
 create_debian_netinstall_pxe_package "ch" "squeeze" "i386"
-create_debian_netinstall_pxe_package "ch" "squeeze" "amd64" "gtk"
 create_debian_netinstall_pxe_package "ch" "squeeze" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "squeeze" "amd64"
+create_debian_netinstall_pxe_package "ch" "squeeze" "amd64" "gtk"
+
+create_debian_netinstall_pxe_package "ch" "squeeze" "ia64"
 
 # create Debian wheezy NetInstall package
-create_debian_netinstall_pxe_package "ch" "wheezy" "amd64"
 create_debian_netinstall_pxe_package "ch" "wheezy" "i386"
-create_debian_netinstall_pxe_package "ch" "wheezy" "amd64" "gtk"
 create_debian_netinstall_pxe_package "ch" "wheezy" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "wheezy" "amd64"
+create_debian_netinstall_pxe_package "ch" "wheezy" "amd64" "gtk"
 
 # create Debian sid NetInstall package
-create_debian_netinstall_pxe_package "ch" "sid" "amd64"
 create_debian_netinstall_pxe_package "ch" "sid" "i386"
-create_debian_netinstall_pxe_package "ch" "sid" "amd64" "gtk"
 create_debian_netinstall_pxe_package "ch" "sid" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "sid" "amd64"
+create_debian_netinstall_pxe_package "ch" "sid" "amd64" "gtk"
 
 # create Debian jessie NetInstall package
-create_debian_netinstall_pxe_package "ch" "jessie" "amd64"
 create_debian_netinstall_pxe_package "ch" "jessie" "i386"
-create_debian_netinstall_pxe_package "ch" "jessie" "amd64" "gtk"
 create_debian_netinstall_pxe_package "ch" "jessie" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "jessie" "amd64"
+create_debian_netinstall_pxe_package "ch" "jessie" "amd64" "gtk"
+create_debian_netinstall_pxe_package "ch" "jessie" "armhf"
+create_debian_netinstall_pxe_package "ch" "jessie" "armhf" "gtk"
+create_debian_netinstall_pxe_package "ch" "jessie" "arm64"
+create_debian_netinstall_pxe_package "ch" "jessie" "arm64" "gtk"
 
 # create Debian stretch NetInstall package
-create_debian_netinstall_pxe_package "ch" "stretch" "amd64"
 create_debian_netinstall_pxe_package "ch" "stretch" "i386"
-create_debian_netinstall_pxe_package "ch" "stretch" "amd64" "gtk"
 create_debian_netinstall_pxe_package "ch" "stretch" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "stretch" "amd64"
+create_debian_netinstall_pxe_package "ch" "stretch" "amd64" "gtk"
 
-create_debian_netinstall_pxe_package "ch" "jessie" "arm64"
-create_debian_netinstall_pxe_package "ch" "jessie" "armhf"
 
 LOCAL_PACKAGES=$(cd pxe-packages && find . -type f -name "*.tar.gz")
 (for PACKAGE in ${LOCAL_PACKAGES}; do
