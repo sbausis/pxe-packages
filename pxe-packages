@@ -144,6 +144,23 @@ function create_debian_netinstall_pxe_package() {
 	rm -f ${TEMPDIR}/config.sh
 }
 
+function create_ubuntu_netinstall_pxe_package() {
+	#local MIRROR="$1"
+	local SUITE="$1"
+	local ARCH="$2"
+	local INTERFACE="$3"
+	mkdir -p ${OUTDIR}/pxe-packages
+	#echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" >/config.sh
+	echo "SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" >/config.sh
+	cat ${SCRIPTSDIR}/ubuntu_netinstall_helper.sh >> ${TEMPDIR}/config.sh
+	if [ -n "${INTERFACE}" ]; then
+		tar -czf ${OUTDIR}/pxe-packages/ubuntu_${SUITE}_netinstall_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
+	else
+		tar -czf ${OUTDIR}/pxe-packages/ubuntu_${SUITE}_netinstall_${ARCH}.tar.gz -C ${TEMPDIR} config.sh
+	fi
+	rm -f ${TEMPDIR}/config.sh
+}
+
 ################################################################################
 
 echo "[ ${SCRIPTNAME} ] ${OUTDIR}"
@@ -166,6 +183,16 @@ create_debian_netinstall_pxe_package "ch" "jessie" "amd64"
 create_debian_netinstall_pxe_package "ch" "jessie" "i386"
 create_debian_netinstall_pxe_package "ch" "jessie" "amd64" "gtk"
 create_debian_netinstall_pxe_package "ch" "jessie" "i386" "gtk"
+
+# ubuntu
+create_ubuntu_netinstall_pxe_package "vivid" "amd64"
+create_ubuntu_netinstall_pxe_package "vivid" "i386"
+create_ubuntu_netinstall_pxe_package "trusty" "amd64"
+create_ubuntu_netinstall_pxe_package "trusty" "i386"
+create_ubuntu_netinstall_pxe_package "wily" "amd64"
+create_ubuntu_netinstall_pxe_package "wily" "i386"
+create_ubuntu_netinstall_pxe_package "precise" "amd64"
+create_ubuntu_netinstall_pxe_package "precise" "i386"
 
 LOCAL_PACKAGES=$(cd ${OUTDIR}/pxe-packages && find . -type f -name "*.tar.gz")
 (for PACKAGE in ${LOCAL_PACKAGES}; do
