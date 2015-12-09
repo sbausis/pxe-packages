@@ -75,10 +75,12 @@ touch ${LOCKFILE}
 # get Arguments
 
 OUTDIR=""
+INSTALL="1"
 
-while getopts ":o:" opt; do
+while getopts ":o:i" opt; do
 	case $opt in
 		o) OUTDIR="$OPTARG" ;;
+		i) INSTALL="0" ;;
 		\?) echo "Invalid option: -$OPTARG" >&2 && help_exit ;;
 		:) echo "Option -$OPTARG requires an argument." >&2 && help_exit ;;
 	esac
@@ -104,8 +106,13 @@ bash /usr/local/lib/${SCRIPTNAME}/${SCRIPTNAME} \$@
 exit \$?
 EOF
 	chmod +x /usr/local/bin/${SCRIPTNAME}
-	/usr/local/bin/${SCRIPTNAME} $@
-	clean_up $?
+	
+	if [ "${INSTALL}" == "0" ]; then
+		clean_up 0
+	else
+		/usr/local/bin/${SCRIPTNAME} $@
+		clean_up $?
+	fi
 
 fi
 
