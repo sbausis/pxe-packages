@@ -160,7 +160,7 @@ create_debian_netinstall_pxe_package "ch" "jessie" "i386"
 create_debian_netinstall_pxe_package "ch" "jessie" "amd64" "gtk"
 create_debian_netinstall_pxe_package "ch" "jessie" "i386" "gtk"
 
-LOCAL_PACKAGES=$(cd pxe-packages && find . -type f -name "*.tar.gz")
+LOCAL_PACKAGES=$(cd ${OUTDIR}/pxe-packages && find . -type f -name "*.tar.gz")
 (for PACKAGE in ${LOCAL_PACKAGES}; do
 	echo "http://UniverseNAS.0rca.ch/sources/pxe-packages/"$(basename ${PACKAGE})
 done) > ${TEMPDIR}/pxe-packages.list
