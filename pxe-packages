@@ -134,7 +134,7 @@ function create_debian_netinstall_pxe_package() {
 	local ARCH="$3"
 	local INTERFACE="$4"
 	mkdir -p ${OUTDIR}/pxe-packages
-	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" >/config.sh
+	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" > ${TEMPDIR}/config.sh
 	cat ${SCRIPTSDIR}/debian_netinstall_helper.sh >> ${TEMPDIR}/config.sh
 	if [ -n "${INTERFACE}" ]; then
 		tar -czf ${OUTDIR}/pxe-packages/debian_${SUITE}_netinstall_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
@@ -151,7 +151,7 @@ function create_ubuntu_netinstall_pxe_package() {
 	local INTERFACE="$3"
 	mkdir -p ${OUTDIR}/pxe-packages
 	#echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" >/config.sh
-	echo "SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" >/config.sh
+	echo "SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" > ${TEMPDIR}/config.sh
 	cat ${SCRIPTSDIR}/ubuntu_netinstall_helper.sh >> ${TEMPDIR}/config.sh
 	if [ -n "${INTERFACE}" ]; then
 		tar -czf ${OUTDIR}/pxe-packages/ubuntu_${SUITE}_netinstall_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
