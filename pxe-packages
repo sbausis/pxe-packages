@@ -167,32 +167,81 @@ echo "[ ${SCRIPTNAME} ] ${OUTDIR}"
 STARTTIME=`date +%s`
 
 # create Debian squeeze NetInstall package
-create_debian_netinstall_pxe_package "ch" "squeeze" "amd64"
-create_debian_netinstall_pxe_package "ch" "squeeze" "i386"
 create_debian_netinstall_pxe_package "ch" "squeeze" "amd64" "gtk"
+create_debian_netinstall_pxe_package "ch" "squeeze" "amd64"
 create_debian_netinstall_pxe_package "ch" "squeeze" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "squeeze" "i386"
+
+# create Debian squeeze Testing
+create_debian_netinstall_pxe_package "ch" "squeeze" "ia64"
+create_debian_netinstall_pxe_package "ch" "squeeze" "kfreebsd-amd64"
+create_debian_netinstall_pxe_package "ch" "squeeze" "kfreebsd-i386"
 
 # create Debian wheezy NetInstall package
-create_debian_netinstall_pxe_package "ch" "wheezy" "amd64"
-create_debian_netinstall_pxe_package "ch" "wheezy" "i386"
 create_debian_netinstall_pxe_package "ch" "wheezy" "amd64" "gtk"
+create_debian_netinstall_pxe_package "ch" "wheezy" "amd64"
 create_debian_netinstall_pxe_package "ch" "wheezy" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "wheezy" "i386"
+
+# create Debian wheezy Testing
+create_debian_netinstall_pxe_package "ch" "wheezy" "ia64"
+create_debian_netinstall_pxe_package "ch" "wheezy" "kfreebsd-amd64" "gtk"
+create_debian_netinstall_pxe_package "ch" "wheezy" "kfreebsd-amd64"
+create_debian_netinstall_pxe_package "ch" "wheezy" "kfreebsd-i386"
+
+# create Debian sid NetInstall package
+create_debian_netinstall_pxe_package "ch" "sid" "amd64" "gtk"
+create_debian_netinstall_pxe_package "ch" "sid" "amd64"
+create_debian_netinstall_pxe_package "ch" "sid" "arm64"
+create_debian_netinstall_pxe_package "ch" "sid" "armhf"
+create_debian_netinstall_pxe_package "ch" "sid" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "sid" "i386"
+create_debian_netinstall_pxe_package "ch" "sid" "ppc64el"
 
 # create Debian jessie NetInstall package
-create_debian_netinstall_pxe_package "ch" "jessie" "amd64"
-create_debian_netinstall_pxe_package "ch" "jessie" "i386"
 create_debian_netinstall_pxe_package "ch" "jessie" "amd64" "gtk"
+create_debian_netinstall_pxe_package "ch" "jessie" "amd64"
+create_debian_netinstall_pxe_package "ch" "jessie" "arm64"
+create_debian_netinstall_pxe_package "ch" "jessie" "armhf"
 create_debian_netinstall_pxe_package "ch" "jessie" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "jessie" "i386"
+create_debian_netinstall_pxe_package "ch" "jessie" "ppc64el"
 
-# ubuntu
-create_ubuntu_netinstall_pxe_package "vivid" "amd64"
-create_ubuntu_netinstall_pxe_package "vivid" "i386"
+# create Debian stretch NetInstall package
+create_debian_netinstall_pxe_package "ch" "stretch" "amd64" "gtk"
+create_debian_netinstall_pxe_package "ch" "stretch" "amd64"
+create_debian_netinstall_pxe_package "ch" "stretch" "arm64"
+create_debian_netinstall_pxe_package "ch" "stretch" "armhf"
+create_debian_netinstall_pxe_package "ch" "stretch" "i386" "gtk"
+create_debian_netinstall_pxe_package "ch" "stretch" "i386"
+create_debian_netinstall_pxe_package "ch" "stretch" "ppc64el"
+
+################################################################################
+
+# create Ubuntu precise NetInstall package
+create_ubuntu_netinstall_pxe_package "precise" "amd64" "gtk"
+create_ubuntu_netinstall_pxe_package "precise" "amd64"
+create_ubuntu_netinstall_pxe_package "precise" "i386" "gtk"
+create_ubuntu_netinstall_pxe_package "precise" "i386"
+create_ubuntu_netinstall_pxe_package "precise" "i386" "non-pae"
+
+# create Ubuntu trusty NetInstall package
 create_ubuntu_netinstall_pxe_package "trusty" "amd64"
 create_ubuntu_netinstall_pxe_package "trusty" "i386"
+
+# create Ubuntu vivid NetInstall package
+create_ubuntu_netinstall_pxe_package "vivid" "amd64"
+create_ubuntu_netinstall_pxe_package "vivid" "i386"
+
+# create Ubuntu wily NetInstall package
 create_ubuntu_netinstall_pxe_package "wily" "amd64"
 create_ubuntu_netinstall_pxe_package "wily" "i386"
-create_ubuntu_netinstall_pxe_package "precise" "amd64"
-create_ubuntu_netinstall_pxe_package "precise" "i386"
+
+# create Ubuntu xenial NetInstall package
+create_ubuntu_netinstall_pxe_package "xenial" "amd64"
+create_ubuntu_netinstall_pxe_package "xenial" "i386"
+
+################################################################################
 
 LOCAL_PACKAGES=$(cd ${OUTDIR}/pxe-packages && find . -type f -name "*.tar.gz")
 (for PACKAGE in ${LOCAL_PACKAGES}; do
