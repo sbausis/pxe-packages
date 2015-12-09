@@ -31,14 +31,17 @@ LOCKFILE=${TEMPDIR}/${SCRIPTNAME}.lock
 
 function clean_up() {
 	
-	#echo "Clean up ..."
-	#rm -Rf "${TEMPDIR}"
+	echo "Clean up ..."
 	
+	rm -Rf "${TEMPDIR}"
+	rm -f "${LOCKFILE}"
+	
+	trap "" SIGHUP SIGINT SIGTERM SIGQUIT EXIT
 	if [ "$1" != "0" ]; then
 		echo "ERROR ..."
 		exit $1
 	else
-		#echo " -> Done ..."
+		echo "DONE ..."
 		exit 0
 	fi
 }
@@ -67,7 +70,7 @@ function help_exit() {
 ################################################################################
 ## Need LOCKFILE
 
-trap "{ clean_up; exit 255; }" SIGHUP SIGINT SIGTERM SIGQUIT
+trap "{ clean_up 255; }" SIGHUP SIGINT SIGTERM SIGQUIT EXIT
 touch ${LOCKFILE}
 
 ################################################################################
