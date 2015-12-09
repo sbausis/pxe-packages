@@ -8,6 +8,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 SCRIPTNAME=$(basename "$0")
+SCRIPTNAME=$(basename "$0")
 SCRIPTDIR=$(cd `dirname "$0"`; pwd)
 SCRIPTSDIR="${SCRIPTDIR}/.scripts"
 
@@ -72,9 +73,38 @@ trap "{ clean_up 255; }" SIGHUP SIGINT SIGTERM SIGQUIT EXIT
 touch ${LOCKFILE}
 
 ################################################################################
-# need Arguments
+# get Arguments
 
 OUTDIR=""
+
+################################################################################
+# need newest Script installed
+
+REMOTE_REF=$(git ls-remote https://github.com/sbausis/${SCRIPTNAME}.git | grep "refs/heads/master" | awk '{print $1}')
+[ -f "/usr/local/lib/${SCRIPTNAME}/${SCRIPTNAME}.ref" ] && LOCAL_REF=$(cat "/usr/local/lib/${SCRIPTNAME}/${SCRIPTNAME}.ref")
+
+if [ ! -f "/usr/local/bin/${SCRIPTNAME}" ] || [ -z "${LOCAL_REF}" ] || [ "${LOCAL_REF}" != "${REMOTE_REF}" ] || [ "${INSTALL}" == "0" ]; then
+	
+	echo "Installing to /usr/local/lib/${SCRIPTNAME} ..."
+	git clone https://github.com/sbausis/${SCRIPTNAME}.git ${TEMPDIR}/${SCRIPTNAME}
+	rm -Rf /usr/local/lib/${SCRIPTNAME}
+	mkdir -p /usr/local/lib/${SCRIPTNAME}
+	cp -Rf ${TEMPDIR}/${SCRIPTNAME}/${SCRIPTNAME} ${TEMPDIR}/${SCRIPTNAME}/.scripts /usr/local/lib/${SCRIPTNAME}/
+	echo "${REMOTE_REF}" > "/usr/local/lib/${SCRIPTNAME}/${SCRIPTNAME}.ref"
+	cat <<EOF > /usr/local/bin/${SCRIPTNAME}
+#!/bin/bash
+bash /usr/local/lib/${SCRIPTNAME}/${SCRIPTNAME} \$@
+exit \$?
+EOF
+	chmod +x /usr/local/bin/${SCRIPTNAME}
+	/usr/local/bin/${SCRIPTNAME} $@
+	clean_up $?
+
+fi
+
+################################################################################
+# need Arguments
+
 if [ -z "${OUTDIR}" ] && [ -f "~/.pxe-packages" ]; then
 	source "~/.pxe-packages"
 else
