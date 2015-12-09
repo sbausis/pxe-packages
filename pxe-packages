@@ -8,7 +8,6 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 SCRIPTNAME=$(basename "$0")
-SCRIPTNAME=$(basename "$0")
 SCRIPTDIR=$(cd `dirname "$0"`; pwd)
 SCRIPTSDIR="${SCRIPTDIR}/.scripts"
 
@@ -107,8 +106,8 @@ fi
 
 if [ -z "${OUTDIR}" ] && [ -f "~/.pxe-packages" ]; then
 	source "~/.pxe-packages"
-else
-	OUTDIR="./"
+#else
+#	OUTDIR="./"
 fi
 [ -d "${OUTDIR}" ] || help_exit
 
