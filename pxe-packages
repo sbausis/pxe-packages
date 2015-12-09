@@ -53,10 +53,10 @@ function print_help() {
 ${SCRIPTNAME}  version 0.1b
 Copyright (C) 2015 by Simon Baur (sbausis at gmx dot net)
 
-Usage: ${SCRIPTNAME} [OPTIONS]... -o [OUTFILE]
+Usage: ${SCRIPTNAME} [OPTIONS]... -o [OUTDIR]
 
 Options
- -o          set OUTFILE
+ -o          set OUTDIR
 "
 }
 
@@ -75,6 +75,14 @@ touch ${LOCKFILE}
 # get Arguments
 
 OUTDIR=""
+
+while getopts ":o:" opt; do
+	case $opt in
+		o) OUTDIR="$OPTARG" ;;
+		\?) echo "Invalid option: -$OPTARG" >&2 && help_exit ;;
+		:) echo "Option -$OPTARG requires an argument." >&2 && help_exit ;;
+	esac
+done
 
 ################################################################################
 # need newest Script installed
@@ -104,12 +112,12 @@ fi
 ################################################################################
 # need Arguments
 
-if [ -z "${OUTDIR}" ] && [ -f "~/.pxe-packages" ]; then
-	source "~/.pxe-packages"
-#else
-#	OUTDIR="./"
+[ -z "${OUTDIR}" ] && [ -f ~/.pxe-packages ] && source ~/.pxe-packages
+
+if [ ! -d "${OUTDIR}" ]; then
+	echo "no OUTDIR"
+	help_exit
 fi
-[ -d "${OUTDIR}" ] || help_exit
 
 ################################################################################
 
