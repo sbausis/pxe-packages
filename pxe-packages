@@ -126,7 +126,7 @@ function create_debian_netinstall_pxe_package() {
 	local SUITE="$2"
 	local ARCH="$3"
 	local INTERFACE="$4"
-	mkdir -p pxe-packages
+	mkdir -p ${OUTDIR}/pxe-packages
 	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" >/config.sh
 	cat ${SCRIPTSDIR}/debian_netinstall_helper.sh >> ${TEMPDIR}/config.sh
 	if [ -n "${INTERFACE}" ]; then
