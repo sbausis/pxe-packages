@@ -130,9 +130,9 @@ function create_debian_netinstall_pxe_package() {
 	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" >/config.sh
 	cat ${SCRIPTSDIR}/debian_netinstall_helper.sh >> ${TEMPDIR}/config.sh
 	if [ -n "${INTERFACE}" ]; then
-		tar -czf pxe-packages/debian_${SUITE}_netinstall_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
+		tar -czf ${OUTDIR}/pxe-packages/debian_${SUITE}_netinstall_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
 	else
-		tar -czf pxe-packages/debian_${SUITE}_netinstall_${ARCH}.tar.gz -C ${TEMPDIR} config.sh
+		tar -czf ${OUTDIR}/pxe-packages/debian_${SUITE}_netinstall_${ARCH}.tar.gz -C ${TEMPDIR} config.sh
 	fi
 	rm -f ${TEMPDIR}/config.sh
 }
