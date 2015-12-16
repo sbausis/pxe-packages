@@ -256,7 +256,10 @@ done) >> ${TEMPDIR}/pxe-packages.list
 cat <(cat ${TEMPDIR}/pxe-packages.list | sort) > ${OUTDIR}/pxe-packages.list
 rm -f ${TEMPDIR}/pxe-packages.list
 
+################################################################################
+
 echo "6.03" > ${OUTDIR}/pxe-syslinux
+cp -f ${SCRIPTDIR}/.files/*.tar.gz ${OUTDIR}/
 
 ################################################################################
 
