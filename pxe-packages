@@ -98,7 +98,9 @@ if [ ! -f "/usr/local/bin/${SCRIPTNAME}" ] || [ -z "${LOCAL_REF}" ] || [ "${LOCA
 	git clone https://github.com/sbausis/${SCRIPTNAME}.git ${TEMPDIR}/${SCRIPTNAME}
 	rm -Rf /usr/local/lib/${SCRIPTNAME}
 	mkdir -p /usr/local/lib/${SCRIPTNAME}
-	cp -Rf ${TEMPDIR}/${SCRIPTNAME}/${SCRIPTNAME} ${TEMPDIR}/${SCRIPTNAME}/.scripts /usr/local/lib/${SCRIPTNAME}/
+	cp -Rf ${TEMPDIR}/${SCRIPTNAME}/* /usr/local/lib/${SCRIPTNAME}/
+	cp -Rf ${TEMPDIR}/${SCRIPTNAME}/.scripts /usr/local/lib/${SCRIPTNAME}/
+	cp -Rf ${TEMPDIR}/${SCRIPTNAME}/.files /usr/local/lib/${SCRIPTNAME}/
 	echo "${REMOTE_REF}" > "/usr/local/lib/${SCRIPTNAME}/${SCRIPTNAME}.ref"
 	cat <<EOF > /usr/local/bin/${SCRIPTNAME}
 #!/bin/bash
