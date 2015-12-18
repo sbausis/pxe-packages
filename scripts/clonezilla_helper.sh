@@ -106,6 +106,10 @@ cp -Rf ${SOURCE_DIR}/* ${DEST_DIR}/
 ################################################################################
 # generate config
 
+LABEL="Clonezilla live (To RAM)"
+KERNEL="${DEST_DIR}/live/vmlinuz"
+APPEND="initrd=${DEST_DIR}/live/initrd.img boot=live union=aufs config noswap nolocales edd=on nomodeset ocs_live_run=\"ocs-live-general\" ocs_live_extra_param=\"\" keyboard-layouts=\"\" ocs_live_batch=\"no\" locales=\"\" vga=788 nosplash noprompt netboot=nfs nfsroot=<Your_IP_Address>:<Your_NFS_Export>/${DEST_DIR}"
+
 CONFIG_FILE="./.clonezilla-live-${VERSION}-${ARCH}.config"
 cat <<EOF > ${CONFIG_FILE}
 LABEL $LABEL

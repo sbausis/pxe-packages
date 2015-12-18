@@ -161,6 +161,17 @@ function create_ubuntu_netinstall_pxe_package() {
 	rm -f ${TEMPDIR}/config.sh
 }
 
+function create_clonezilla_pxe_package() {
+	#local MIRROR="$1"
+	local VERSION="$1"
+	local ARCH="$2"
+	mkdir -p ${OUTDIR}/pxe-packages
+	echo "VERSION=${VERSION};ARCH=${ARCH}" > ${TEMPDIR}/config.sh
+	cat ${SCRIPTSDIR}/clonezilla_helper.sh >> ${TEMPDIR}/config.sh
+	tar -czf ${OUTDIR}/pxe-packages/clonezilla_live_${VERSION}_${ARCH}.tar.gz -C ${TEMPDIR} config.sh
+	rm -f ${TEMPDIR}/config.sh
+}
+
 ################################################################################
 
 echo "[ ${SCRIPTNAME} ] ${OUTDIR}"
@@ -240,6 +251,12 @@ create_ubuntu_netinstall_pxe_package "wily" "i386"
 # create Ubuntu xenial NetInstall package
 create_ubuntu_netinstall_pxe_package "xenial" "amd64"
 create_ubuntu_netinstall_pxe_package "xenial" "i386"
+
+################################################################################
+
+create_clonezilla_pxe_package "2.4.2-61" "amd64"
+create_clonezilla_pxe_package "2.4.2-61" "i585"
+create_clonezilla_pxe_package "2.4.2-61" "i686-pae"
 
 ################################################################################
 
