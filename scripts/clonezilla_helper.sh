@@ -88,7 +88,7 @@ wget -O ${TEMPDIR}/${FILE_URL} ${URL}
 # extract NetBoot-Image
 
 mkdir -p ${TEMPDIR}/clonezilla-live-${VERSION}-${ARCH}
-unzip -j ${TEMPDIR}/${FILE_URL} -d ${TEMPDIR}/clonezilla-live-${VERSION}-${ARCH}
+unzip -o ${TEMPDIR}/${FILE_URL} -d ${TEMPDIR}/clonezilla-live-${VERSION}-${ARCH}
 
 ################################################################################
 # working directories
