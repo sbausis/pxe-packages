@@ -134,7 +134,7 @@ function create_debian_netinstall_pxe_package() {
 	local ARCH="$3"
 	local INTERFACE="$4"
 	mkdir -p ${OUTDIR}/pxe-packages
-	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" > ${TEMPDIR}/config.sh
+	echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=${INTERFACE}" > ${TEMPDIR}/config.sh
 	cat ${SCRIPTSDIR}/debian_netinstall_helper.sh >> ${TEMPDIR}/config.sh
 	if [ -n "${INTERFACE}" ]; then
 		tar -czf ${OUTDIR}/pxe-packages/debian_${SUITE}_netinstall_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
@@ -144,14 +144,23 @@ function create_debian_netinstall_pxe_package() {
 	rm -f ${TEMPDIR}/config.sh
 }
 
+function create_debian_liveboot_pxe_package() {
+	local RELEASE="$1"
+	local ARCH="$2"
+	local INTERFACE="$3"
+	mkdir -p ${OUTDIR}/pxe-packages
+	echo "RELEASE=${RELEASE};ARCH=${ARCH};INTERFACE=${INTERFACE}" > ${TEMPDIR}/config.sh
+	cat ${SCRIPTSDIR}/debian_liveboot_helper.sh >> ${TEMPDIR}/config.sh
+	tar -czf ${OUTDIR}/pxe-packages/debian_${SUITE}_liveboot_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
+	rm -f ${TEMPDIR}/config.sh
+}
+
 function create_ubuntu_netinstall_pxe_package() {
-	#local MIRROR="$1"
 	local SUITE="$1"
 	local ARCH="$2"
 	local INTERFACE="$3"
 	mkdir -p ${OUTDIR}/pxe-packages
-	#echo "MIRROR=${MIRROR};SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" >/config.sh
-	echo "SUITE=${SUITE};ARCH=${ARCH};INTERFACE=$INTERFACE" > ${TEMPDIR}/config.sh
+	echo "SUITE=${SUITE};ARCH=${ARCH};INTERFACE=${INTERFACE}" > ${TEMPDIR}/config.sh
 	cat ${SCRIPTSDIR}/ubuntu_netinstall_helper.sh >> ${TEMPDIR}/config.sh
 	if [ -n "${INTERFACE}" ]; then
 		tar -czf ${OUTDIR}/pxe-packages/ubuntu_${SUITE}_netinstall_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
@@ -257,6 +266,20 @@ create_ubuntu_netinstall_pxe_package "xenial" "i386"
 create_clonezilla_pxe_package "2.4.2-61" "amd64"
 create_clonezilla_pxe_package "2.4.2-61" "i585"
 create_clonezilla_pxe_package "2.4.2-61" "i686-pae"
+
+################################################################################
+
+create_debian_liveboot_pxe_package "7.9.0" "amd64" "gnome-desktop"
+create_debian_liveboot_pxe_package "7.9.0" "amd64" "kde-desktop"
+create_debian_liveboot_pxe_package "7.9.0" "amd64" "lxde-desktop"
+create_debian_liveboot_pxe_package "7.9.0" "amd64" "rescue"
+create_debian_liveboot_pxe_package "7.9.0" "amd64" "xfce-desktop"
+
+create_debian_liveboot_pxe_package "7.9.0" "i386" "gnome-desktop"
+create_debian_liveboot_pxe_package "7.9.0" "i386" "kde-desktop"
+create_debian_liveboot_pxe_package "7.9.0" "i386" "lxde-desktop"
+create_debian_liveboot_pxe_package "7.9.0" "i386" "rescue"
+create_debian_liveboot_pxe_package "7.9.0" "i386" "xfce-desktop"
 
 ################################################################################
 
