@@ -151,7 +151,7 @@ function create_debian_liveboot_pxe_package() {
 	mkdir -p ${OUTDIR}/pxe-packages
 	echo "RELEASE=${RELEASE};ARCH=${ARCH};INTERFACE=${INTERFACE}" > ${TEMPDIR}/config.sh
 	cat ${SCRIPTSDIR}/debian_liveboot_helper.sh >> ${TEMPDIR}/config.sh
-	tar -czf ${OUTDIR}/pxe-packages/debian_${SUITE}_liveboot_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
+	tar -czf ${OUTDIR}/pxe-packages/debian_${RELEASE}_liveboot_${ARCH}_${INTERFACE}.tar.gz -C ${TEMPDIR} config.sh
 	rm -f ${TEMPDIR}/config.sh
 }
 
