@@ -273,12 +273,14 @@ create_debian_liveboot_pxe_package "7.9.0" "amd64" "gnome-desktop"
 create_debian_liveboot_pxe_package "7.9.0" "amd64" "kde-desktop"
 create_debian_liveboot_pxe_package "7.9.0" "amd64" "lxde-desktop"
 create_debian_liveboot_pxe_package "7.9.0" "amd64" "rescue"
+create_debian_liveboot_pxe_package "7.9.0" "amd64" "standard"
 create_debian_liveboot_pxe_package "7.9.0" "amd64" "xfce-desktop"
 
 create_debian_liveboot_pxe_package "7.9.0" "i386" "gnome-desktop"
 create_debian_liveboot_pxe_package "7.9.0" "i386" "kde-desktop"
 create_debian_liveboot_pxe_package "7.9.0" "i386" "lxde-desktop"
 create_debian_liveboot_pxe_package "7.9.0" "i386" "rescue"
+create_debian_liveboot_pxe_package "7.9.0" "i386" "standard"
 create_debian_liveboot_pxe_package "7.9.0" "i386" "xfce-desktop"
 
 ################################################################################
