@@ -149,7 +149,7 @@ cp -f ${TEMPDIR}/debian-live-${RELEASE}-${ARCH}-${INTERFACE}.initrd.img ${DEST_D
 LABEL="Debian ${SUITE} ${ARCH} LiveInstall"
 [ -n "${INTERFACE}" ] && LABEL+=" ${INTERFACE}"
 KERNEL="${DEST_DIR}/${LINUX}"
-APPEND="vga=normal initrd=${DEST_DIR}/initrd.img --quiet"
+APPEND="vga=normal initrd=${DEST_DIR}/initrd.img config boot=live netboot=nfs nfsroot=<Your_IP_Address>:<Your_NFS_Export>/${DEST_DIR}"
 
 ################################################################################
 # generate config
